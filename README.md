@@ -23,9 +23,23 @@ used the same script to download the data from Yahoo Finance. The data for each 
 
 ### Stock & Cryptocurrency Price Prediction
 
-We considering two model architectures for stock price prediction. The first model is a LSTM based RNN model. The second model is a CNN.
+We considering two model architectures for stock & cryptocurrencies price prediction. The first model is a LSTM based RNN model. The second model is a CNN.
 
-### 
+### Steps to reproduce the results
+
+Clone this repository using the following command:
+
+```bash
+git clone  https://github.com/PacificG/Portfolio-Optimization-using-stocks-and-cryptocurrencies.git
+```
+
+In the `Portfolio-Optimization-using-stocks-and-cryptocurrencies` directory, run the following command to set up the environment:
+
+```bash
+virtualenv -p python3 venv
+```
+
+
 
 
 * Long short term memory
