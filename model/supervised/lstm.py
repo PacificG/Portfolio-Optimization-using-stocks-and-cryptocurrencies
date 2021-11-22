@@ -41,7 +41,6 @@ class StockLSTM(BaseModel):
             self.model.add(Dense(64))
             self.model.add(Dropout(0.5))
             self.model.add(Dense(self.num_classes, activation='softmax'))
-
             self.model.compile(loss='categorical_crossentropy', optimizer=Adam(lr=1e-4), metrics=['accuracy'])
             print('Built model from scratch')
         self.model._make_predict_function()
@@ -54,10 +53,10 @@ class StockLSTM(BaseModel):
             #while continue_train:
             self.model.fit(X_train, Y_train, batch_size=128, epochs=50, validation_data=(X_val, Y_val),
                            shuffle=True, verbose=verbose)
-            #save_weights = input('Type True to save weights\n')
-            #if save_weights:
+            # save_weights = input('Type True to save weights\n')
+            # if save_weights:
             #    self.model.save(self.weights_file)
-            #continue_train = input("True to continue train, otherwise stop training...\n")
+            # continue_train = input("True to continue train, otherwise stop training...\n")
         print('lstm model saved.')
         self.model.save(self.weights_file)
         print('Finish.')
@@ -92,6 +91,7 @@ if __name__ == '__main__':
     history, abreviation = read_stock_history(data_path, window_length=20)
 
     # Build model
+
     model = StockLSTM(num_classes=5, window_length=20)
     model.build_model()
     model.train(train_data[0], train_data[1], val_data[0], val_data[1])

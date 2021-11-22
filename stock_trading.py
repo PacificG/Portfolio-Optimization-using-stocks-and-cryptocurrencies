@@ -106,12 +106,10 @@ class StockActor(ActorNetwork):
         net = tflearn.fully_connected(net, 64)
         if self.use_batch_norm:
             net = tflearn.layers.normalization.batch_normalization(net)
-        # net = tflearn.layers.normalization.batch_normalization(net)
         net = tflearn.activations.relu(net)
         net = tflearn.fully_connected(net, 64)
         if self.use_batch_norm:
             net = tflearn.layers.normalization.batch_normalization(net)
-        # net = tflearn.layers.normalization.batch_normalization(net)
         net = tflearn.activations.relu(net)
         # Final layer weights are init to Uniform[-3e-3, 3e-3]
         w_init = tflearn.initializations.uniform(minval=-0.003, maxval=0.003)
@@ -258,7 +256,7 @@ if __name__ == '__main__':
     parser.add_argument('--debug', '-d', help='print debug statement', default=True)
     parser.add_argument('--predictor_type', '-p', help='cnn or lstm predictor', default='lstm')
     parser.add_argument('--data', '-dt', help='stocks data or crypto data', default='stocks', choices=['stocks', 'crypto'])
-    parser.add_argument('--window_length', '-w', help='observation window length', default=3)
+    parser.add_argument('--window_length', '-w', help='observation window length', default=30, type=int)
     parser.add_argument('--batch_norm', '-b', help='whether to use batch normalization', default="True")
 
     args = vars(parser.parse_args())
