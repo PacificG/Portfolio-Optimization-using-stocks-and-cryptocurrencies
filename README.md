@@ -16,7 +16,7 @@ Stock data is obtained from Yahoo Finance. We have collected stock data for S&P 
 
 Cryptocurrency data is obtained from Yahoo Finance. We have collected top 9 cryptocurrencies on the basis of market capitalization. The data is obtained from the Yahoo Finance API. We have used the same script to download the data from Yahoo Finance. The data for each cryptocurrency is stored in a separate CSV file and we have merged all the CSV files into one CSV file. The data is stored in the `utils/datasets/all_crypto_5yr.csv` file. We have used the data from the `utils/datasets/all_crypto_5yr.csv` file.
 
-*You can use the script to download last n years of data for a list of stocks or cryptocurrencies from Yahoo Finance. Follow the steps mentioned here[https://github.com/PacificG/PortfolioOptimizationStocksCrypto]*
+*You can use the script to download last n years of data for a list of stocks or cryptocurrencies from Yahoo Finance. Follow the steps mentioned [here](https://github.com/PacificG/PortfolioOptimizationStocksCrypto)*
 
 ### Stock & Cryptocurrency Price Prediction
 
