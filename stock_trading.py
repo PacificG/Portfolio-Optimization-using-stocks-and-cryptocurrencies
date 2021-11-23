@@ -256,7 +256,7 @@ if __name__ == '__main__':
     parser.add_argument('--debug', '-d', help='print debug statement', default=True)
     parser.add_argument('--predictor_type', '-p', help='cnn or lstm predictor', default='lstm')
     parser.add_argument('--data', '-dt', help='stocks data or crypto data', default='stocks', choices=['stocks', 'crypto'])
-    parser.add_argument('--window_length', '-w', help='observation window length', default=30, type=int)
+    parser.add_argument('--window_length', '-w', help='observation window length', default=50, type=int)
     parser.add_argument('--batch_norm', '-b', help='whether to use batch normalization', default="True")
 
     args = vars(parser.parse_args())
@@ -277,6 +277,7 @@ if __name__ == '__main__':
 
     # get target history
     target_history = np.empty(shape=(len(target_stocks), num_training_time, history.shape[2]))
+    print(target_history, target_history.shape)
     for i, stock in enumerate(target_stocks):
         target_history[i] = history[abbreviation.index(stock), :num_training_time, :]
 

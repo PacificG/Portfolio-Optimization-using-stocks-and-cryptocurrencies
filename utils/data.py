@@ -11,7 +11,7 @@ import h5py
 import argparse
 from sklearn.model_selection import train_test_split
 
-start_date = '2016-11-07'
+start_date = '2017-11-07'
 end_date = '2021-11-05'
 date_format = '%Y-%m-%d'
 start_datetime = datetime.datetime.strptime(start_date, date_format)
@@ -110,6 +110,7 @@ def create_dataset(filepath, dic, datatype='stocks'):
 
             current_date += datetime.timedelta(days=1)
             current_date_index += 1
+    print(abbreviation)
     write_to_h5py(history, abbreviation, filepath=f'utils/datasets/{datatype}_history.h5')
 
 
@@ -143,8 +144,8 @@ def create_target_dataset(target_list=target_list, datatype='stocks', filepath='
     if datatype == 'stocks':
         history_all, abbreviation_all = read_stock_history()
     elif datatype == 'crypto':
-        # history_all, abbreviation_all = read_crypto_history()
-        pass
+        history_all, abbreviation_all = read_crypto_history()
+    print(abbreviation_all)
     history = None
     for target in target_list:
         print(target)
@@ -155,6 +156,17 @@ def create_target_dataset(target_list=target_list, datatype='stocks', filepath='
             history = np.concatenate((history, data), axis=0)
     write_to_h5py(history, target_list, filepath=f'utils/datasets/{datatype}_history_target.h5')
 
+def read_crypto_history():
+    """ Read crypto history from h5py
+
+    Returns:
+
+    """
+    with h5py.File('utils/datasets/crypto_history.h5', 'r') as f:
+        history = f['history'][:]
+        abbreviation = f['abbreviation'][:].tolist()
+        abbreviation = [abbr.decode('utf-8') for abbr in abbreviation]
+    return history, abbreviation
 
 def read_stock_history(filepath='utils/datasets/stocks_history.h5'):
     """ Read data from extracted h5

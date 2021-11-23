@@ -89,10 +89,9 @@ if __name__ == '__main__':
     # Load training data
     data_path = 'utils/datasets/stocks_history.h5'
     history, abreviation = read_stock_history(data_path, window_length=20)
-
+    print(history.shape, abreviation)
     # Build model
-
-    model = StockLSTM(num_classes=5, window_length=20)
-    model.build_model()
-    model.train(train_data[0], train_data[1], val_data[0], val_data[1])
-    model.evaluate(test_data[0], test_data[1])
+    # model = StockLSTM(num_classes=5, window_length=20)
+    # model.build_model()
+    # model.train(train_data[0], train_data[1], val_data[0], val_data[1])
+    # model.evaluate(test_data[0], test_data[1])

@@ -109,7 +109,7 @@ class PortfolioSim(object):
     """
     Portfolio management sim.
     Params:
-    - cost e.g. 0.0025 is max in Poliniex
+    - cost - trading cost
     """
 
     def __init__(self, asset_names=list(), steps=730, trading_cost=0.0025, time_cost=0.0):
@@ -254,7 +254,7 @@ class PortfolioEnv(gym.Env):
 
         # concatenate observation with ones
         cash_observation = np.ones((1, self.window_length, observation.shape[2]))
-        observation = np.concatenate((cash_observation, observation), axis=0)
+        observation = np.concatenate((cash_observation, observation), axis=0) # add cash observation to observation
 
         cash_ground_truth = np.ones((1, 1, ground_truth_obs.shape[2]))
         ground_truth_obs = np.concatenate((cash_ground_truth, ground_truth_obs), axis=0)
