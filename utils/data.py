@@ -18,13 +18,9 @@ start_datetime = datetime.datetime.strptime(start_date, date_format)
 end_datetime = datetime.datetime.strptime(end_date, date_format)
 number_datetime = (end_datetime - start_datetime).days + 1
 
-exclude_set = {'AGN', 'PNR', 'UA', 'AAL', 'EVHC', 'CHTR', 'CCI', 'WBA', 'ETN', 'NLSN', 'ALLE', 'AVGO', 'XL', 'NWS',
-               'MNST', 'AON', 'MYL', 'KHC', 'MDT', 'BHGE', 'FTV', 'NAVI', 'PYPL', 'WRK', 'ICE', 'COTY', 'CSRA', 'IRM',
-               'FTI', 'JCI', 'HPE', 'SYF', 'INFO', 'EQIX', 'ABBV', 'PRGO', 'CFG', 'HLT', 'BHF', 'ZTS', 'NWSA', 'QRVO',
-               'DXC'}
+exclude_set = set()
 
-target_list = ['AAPL', 'ATVI', 'CMCSA', 'COST', 'CSX', 'DISH', 'EA', 'EBAY', 'FB', 'GOOGL', 'HAS', 'ILMN', 'INTC',
-               'MAR', 'REGN', 'SBUX']
+target_list = ['ADSK', 'CAG', 'BSX', 'ROK', 'AIG', 'XRAY', 'HBI', 'HPE', 'NSC', 'BIO', 'C', 'DAL', 'BBWI', 'GD', 'IPGP', 'PVH', 'INTU', 'EXR', 'CTSH', 'BWA', 'PEP', 'KIM', 'DD', 'ALK', 'UAA', 'CAT', 'PSA', 'DLR', 'ISRG', 'SJM', 'JNPR', 'UHS', 'ORLY', 'CBRE']
 
 target_list_2 = ['FOX', 'FISV', 'EXPE', 'FAST', 'ESRX', 'DLTR', 'CTSH', 'CSCO', 'QCOM', 'PCLN', 'CELG',
                  'AMGN', 'WFM', 'WDC', 'NVDA', 'STX']
@@ -144,9 +140,14 @@ def create_target_dataset(target_list=target_list, datatype='stocks', filepath='
     Returns:
 
     """
-    history_all, abbreviation_all = read_stock_history()
+    if datatype == 'stocks':
+        history_all, abbreviation_all = read_stock_history()
+    elif datatype == 'crypto':
+        # history_all, abbreviation_all = read_crypto_history()
+        pass
     history = None
     for target in target_list:
+        print(target)
         data = np.expand_dims(history_all[abbreviation_all.index(target)], axis=0)
         if history is None:
             history = data
@@ -277,6 +278,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--data", '-d', help="data stocks or crypto",default="stocks", choices=['stocks', 'crypto'])
     parser.add_argument("--filePath", '-f', help= "file path of csv file", default='utils/datasets/all_stocks_5yr.csv')
+    parser.add_argument("--dataset", '-ds', help= "dataset type", default='create_dataset', choices=['create_dataset', 'create_target'])
     args = parser.parse_args()
 
     start_date = '2016-11-07' if args.data == 'stocks' else '2017-08-20'
@@ -286,22 +288,19 @@ if __name__ == "__main__":
     end_datetime = datetime.datetime.strptime(end_date, date_format)
     number_datetime = (end_datetime - start_datetime).days + 1
     if args.data == 'stocks':
-        exclude_set = {'AGN', 'PNR', 'UA', 'AAL', 'EVHC', 'CHTR', 'CCI', 'WBA', 'ETN', 'NLSN', 'ALLE', 'AVGO', 'XL', 'NWS',
-               'MNST', 'AON', 'MYL', 'KHC', 'MDT', 'BHGE', 'FTV', 'NAVI', 'PYPL', 'WRK', 'ICE', 'COTY', 'CSRA', 'IRM',
-               'FTI', 'JCI', 'HPE', 'SYF', 'INFO', 'EQIX', 'ABBV', 'PRGO', 'CFG', 'HLT', 'BHF', 'ZTS', 'NWSA', 'QRVO',
-               'DXC'}
+        exclude_set = set()
 
-        target_list = ['AAPL', 'ATVI', 'CMCSA', 'COST', 'CSX', 'DISH', 'EA', 'EBAY', 'FB', 'GOOGL', 'HAS', 'ILMN', 'INTC',
-               'MAR', 'REGN', 'SBUX']
+        target_list = ['ADSK', 'CAG', 'BSX', 'ROK', 'AIG', 'XRAY', 'HBI', 'HPE', 'NSC', 'BIO', 'C', 'DAL', 'BBWI', 'GD', 'IPGP', 'PVH', 'INTU', 'EXR', 'CTSH', 'BWA', 'PEP', 'KIM', 'DD', 
+                        'ALK', 'UAA', 'CAT', 'PSA', 'DLR', 'ISRG', 'SJM', 'JNPR', 'UHS', 'ORLY', 'CBRE']
 
         target_list_2 = ['FOX', 'FISV', 'EXPE', 'FAST', 'ESRX', 'DLTR', 'CTSH', 'CSCO', 'QCOM', 'PCLN', 'CELG',
                  'AMGN', 'WFM', 'WDC', 'NVDA', 'STX']
     elif args.data == 'crypto':
-        exclude_set = {'AGN', 'PNR', 'UA', 'AAL', 'EVHC', 'CHTR', 'CCI', 'WBA', 'ETN', 'NLSN', 'ALLE', 'AVGO', 'XL', 'NWS',
-               'MNST', 'AON', 'MYL', 'KHC', 'MDT', 'BHGE', 'FTV', 'NAVI', 'PYPL', 'WRK', 'ICE', 'COTY', 'CSRA', 'IRM',
-               'FTI', 'JCI', 'HPE', 'SYF', 'INFO', 'EQIX', 'ABBV', 'PRGO', 'CFG', 'HLT', 'BHF', 'ZTS', 'NWSA', 'QRVO',
-               'DXC'}
+        exclude_set = set()
         target_list = ['BTC-USD','ETH-USD','USDT-USD', 'XRP-USD', 'BNB-USD', 'ADA-USD', 'SOL1-USD', 'HEX-USD','DOT1-USD']
     dic = {'stocks': {'numVar': 6, "num": 503, 'i':7}, 'crypto':{'numVar':6, 'num':9, 'i':7}}
-    create_dataset(args.filePath, dic, args.data)
+    if args.dataset == 'create_dataset':
+        create_dataset(args.filePath, dic, args.data)
+    else:
+        create_target_dataset(target_list, args.data, args.filePath)
 
