@@ -49,6 +49,7 @@ def get_variable_scope(datatype, window_length, predictor_type, use_batch_norm):
 
 def stock_predictor(inputs, predictor_type, use_batch_norm):
     window_length = inputs.get_shape()[2]
+    print('window_length: {}'.format(window_length))
     assert predictor_type in ['cnn', 'lstm'], 'type must be either cnn or lstm'
     if predictor_type == 'cnn':
         net = tflearn.conv_2d(inputs, 32, (1, 3), padding='valid')
@@ -66,6 +67,7 @@ def stock_predictor(inputs, predictor_type, use_batch_norm):
             print('Output:', net.shape)
     elif predictor_type == 'lstm':
         num_stocks = inputs.get_shape()[1]
+        print('num_stocks: {}'.format(num_stocks))
         hidden_dim = 32
         net = tflearn.reshape(inputs, new_shape=[-1, window_length, 1])
         if DEBUG:
@@ -215,9 +217,10 @@ def obs_normalizer(observation):
     """
     if isinstance(observation, tuple):
         observation = observation[0]
-    # directly use close/open ratio as feature
-    observation = observation[:, :, 3:4] / observation[:, :, 0:1]
-    observation = normalize(observation)
+    # # directly use close/open ratio as feature
+    # print('observation shape:', observation.shape)
+    # observation = observation[:, :, 3:4] / observation[:, :, 0:1]
+    # observation = normalize(observation)
     return observation
 
 
@@ -256,7 +259,7 @@ if __name__ == '__main__':
     parser.add_argument('--debug', '-d', help='print debug statement', default=True)
     parser.add_argument('--predictor_type', '-p', help='cnn or lstm predictor', default='lstm')
     parser.add_argument('--data', '-dt', help='stocks data or crypto data', default='stocks', choices=['stocks', 'crypto'])
-    parser.add_argument('--window_length', '-w', help='observation window length', default=50, type=int)
+    parser.add_argument('--window_length', '-w', help='observation window length', default=3, type=int)
     parser.add_argument('--batch_norm', '-b', help='whether to use batch normalization', default="True")
 
     args = vars(parser.parse_args())

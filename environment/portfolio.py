@@ -46,7 +46,7 @@ class DataGenerator(object):
     """Acts as data provider for each new episode."""
     
 
-    def __init__(self, history, abbreviation, steps=730, window_length=50, start_idx=0, start_date=None):
+    def __init__(self, history, abbreviation, steps=365*2, window_length=50, start_idx=0, start_date=None):
         """
 
         Args:
@@ -112,7 +112,7 @@ class PortfolioSim(object):
     - cost - trading cost
     """
 
-    def __init__(self, asset_names=list(), steps=730, trading_cost=0.0025, time_cost=0.0):
+    def __init__(self, asset_names=list(), steps=365*2, trading_cost=0.0025, time_cost=0.0):
         self.asset_names = asset_names
         self.cost = trading_cost
         self.time_cost = time_cost
@@ -181,7 +181,7 @@ class PortfolioEnv(gym.Env):
     def __init__(self,
                  history,
                  abbreviation,
-                 steps=730,  # 2 years
+                 steps=365*2,  # 2 years
                  trading_cost=0.0025,
                  time_cost=0.00,
                  window_length=50,
@@ -319,15 +319,14 @@ class MultiActionPortfolioEnv(PortfolioEnv):
                  history,
                  abbreviation,
                  model_names,
-                 steps=730,  # 2 years
+                 steps=365*2,  # 2 years
                  trading_cost=0.0025,
                  time_cost=0.00,
                  window_length=50,
                  start_idx=0,
                  sample_start_date=None,
                  ):
-        super(MultiActionPortfolioEnv, self).__init__(history, abbreviation, steps, trading_cost, time_cost, window_length,
-                              start_idx, sample_start_date)
+        super(MultiActionPortfolioEnv, self).__init__(history, abbreviation, steps, trading_cost, time_cost, window_length, start_idx, sample_start_date)
         self.model_names = model_names
         # need to create a simulator for each model
         self.sim = [PortfolioSim(
@@ -348,8 +347,10 @@ class MultiActionPortfolioEnv(PortfolioEnv):
         assert action.ndim == 2, 'Action must be a two dimensional array with shape (num_models, num_stocks + 1)'
         assert action.shape[1] == len(self.sim[0].asset_names) + 1
         assert action.shape[0] == len(self.model_names)
+        print(action)
         # normalise just in case
         action = np.clip(action, 0, 1)
+        print(action)
         weights = action  # np.array([cash_bias] + list(action))  # [w0, w1...]
         weights /= (np.sum(weights, axis=1, keepdims=True) + eps)
         # so if weights are all zeros we normalise to [1,0...]

@@ -194,7 +194,7 @@ def main(args):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--window_size', type=int, default=10)
+    parser.add_argument('--window_size', type=int, default=50)
     parser.add_argument('--asset_num', type=int, default=5)
     parser.add_argument('--sample_days', type=int, default=252)
     parser.add_argument('--init_balance', type=int, default=1000000)

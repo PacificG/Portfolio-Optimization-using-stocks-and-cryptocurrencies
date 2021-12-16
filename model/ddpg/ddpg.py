@@ -47,7 +47,7 @@ class DDPG(BaseModel):
         self.action_processor = action_processor
         self.summary_ops, self.summary_vars = build_summaries()
 
-    def initialize(self, load_weights=True, verbose=True):
+    def initialize(self, load_weights=False, verbose=True):
         """ Load training history from path. To be add feature to just load weights, not training states
 
         """

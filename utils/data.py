@@ -11,7 +11,7 @@ import h5py
 import argparse
 from sklearn.model_selection import train_test_split
 
-start_date = '2017-11-07'
+start_date = '2016-11-07'
 end_date = '2021-11-05'
 date_format = '%Y-%m-%d'
 start_datetime = datetime.datetime.strptime(start_date, date_format)
@@ -20,10 +20,9 @@ number_datetime = (end_datetime - start_datetime).days + 1
 
 exclude_set = set()
 
-target_list = ['ADSK', 'CAG', 'BSX', 'ROK', 'AIG', 'XRAY', 'HBI', 'HPE', 'NSC', 'BIO', 'C', 'DAL', 'BBWI', 'GD', 'IPGP', 'PVH', 'INTU', 'EXR', 'CTSH', 'BWA', 'PEP', 'KIM', 'DD', 'ALK', 'UAA', 'CAT', 'PSA', 'DLR', 'ISRG', 'SJM', 'JNPR', 'UHS', 'ORLY', 'CBRE']
+target_list = ['ADSK', 'CAG', 'BSX', 'ROK', 'AIG', 'XRAY', 'HBI', 'HPE', 'NSC', 'BIO', 'C', 'DAL', 'BBWI', 'GD', 'IPGP', 'PVH', 'INTU', 'EXR', 'CTSH', 'BWA']
 
-target_list_2 = ['FOX', 'FISV', 'EXPE', 'FAST', 'ESRX', 'DLTR', 'CTSH', 'CSCO', 'QCOM', 'PCLN', 'CELG',
-                 'AMGN', 'WFM', 'WDC', 'NVDA', 'STX']
+target_list_2 = ['PEP', 'KIM', 'DD', 'ALK', 'UAA', 'CAT', 'PSA', 'DLR', 'ISRG', 'SJM', 'JNPR', 'UHS', 'ORLY', 'CBRE']
 
 
 def normalize(x):
@@ -110,7 +109,6 @@ def create_dataset(filepath, dic, datatype='stocks'):
 
             current_date += datetime.timedelta(days=1)
             current_date_index += 1
-    print(abbreviation)
     write_to_h5py(history, abbreviation, filepath=f'utils/datasets/{datatype}_history.h5')
 
 
@@ -132,7 +130,7 @@ def write_to_h5py(history, abbreviation, filepath='utils/datasets/stocks_history
 
 
 def create_target_dataset(target_list=target_list, datatype='stocks', filepath='utils/datasets/stocks_history_target.h5'):
-    """ Create 16 company history datasets
+    """ Create 20 company history datasets
 
     Args:
         target_list:
@@ -302,11 +300,10 @@ if __name__ == "__main__":
     if args.data == 'stocks':
         exclude_set = set()
 
-        target_list = ['ADSK', 'CAG', 'BSX', 'ROK', 'AIG', 'XRAY', 'HBI', 'HPE', 'NSC', 'BIO', 'C', 'DAL', 'BBWI', 'GD', 'IPGP', 'PVH', 'INTU', 'EXR', 'CTSH', 'BWA', 'PEP', 'KIM', 'DD', 
-                        'ALK', 'UAA', 'CAT', 'PSA', 'DLR', 'ISRG', 'SJM', 'JNPR', 'UHS', 'ORLY', 'CBRE']
+        target_list = ['ADSK', 'CAG', 'BSX', 'ROK', 'AIG', 'XRAY', 'HBI', 'HPE', 'NSC', 'BIO', 'C', 'DAL', 'BBWI', 'GD', 'IPGP', 'PVH', 'INTU', 'EXR', 'CTSH', 'BWA']
 
-        target_list_2 = ['FOX', 'FISV', 'EXPE', 'FAST', 'ESRX', 'DLTR', 'CTSH', 'CSCO', 'QCOM', 'PCLN', 'CELG',
-                 'AMGN', 'WFM', 'WDC', 'NVDA', 'STX']
+        target_list_2 = ['PEP', 'KIM', 'DD', 'ALK', 'UAA', 'CAT', 'PSA', 'DLR', 'ISRG', 'SJM', 'JNPR', 'UHS', 'ORLY', 'CBRE']
+
     elif args.data == 'crypto':
         exclude_set = set()
         target_list = ['BTC-USD','ETH-USD','USDT-USD', 'XRP-USD', 'BNB-USD', 'ADA-USD', 'SOL1-USD', 'HEX-USD','DOT1-USD']

@@ -8,7 +8,7 @@ from keras.models import Sequential
 from tensorflow.keras.layers import Dense, Dropout
 from tensorflow.keras.optimizers import Adam
 from ..base_model import BaseModel
-from ...utils.data import read_stock_history
+# from ...utils.data import read_stock_history
 
 from utils.data import normalize
 
@@ -20,7 +20,7 @@ class StockLSTM(BaseModel):
         self.num_classes = num_classes
         self.window_length = window_length
 
-    def build_model(self, load_weights=True):
+    def build_model(self, load_weights=False):
         """ Load training history from path
 
         Args:
@@ -48,7 +48,7 @@ class StockLSTM(BaseModel):
 
     def train(self, X_train, Y_train, X_val, Y_val, verbose=True):
         #continue_train = True
-        for episodes in range(1,21):
+        for episodes in range(1,15):
             print('Episode ', episodes)
             #while continue_train:
             self.model.fit(X_train, Y_train, batch_size=128, epochs=50, validation_data=(X_val, Y_val),
@@ -88,7 +88,7 @@ class StockLSTM(BaseModel):
 if __name__ == '__main__':
     # Load training data
     data_path = 'utils/datasets/stocks_history.h5'
-    history, abreviation = read_stock_history(data_path, window_length=20)
+    history, abreviation = read_stock_history(data_path, window_length=3)
     print(history.shape, abreviation)
     # Build model
     # model = StockLSTM(num_classes=5, window_length=20)

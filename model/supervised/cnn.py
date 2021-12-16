@@ -2,10 +2,10 @@
 Train a supervised CNN model using optimal stock as label
 """
 from keras.models import Sequential
-from keras.layers import Dense, Dropout, Flatten
-from keras.layers import Conv2D
+from tensorflow.keras.layers import Dense, Dropout, Flatten
+from tensorflow.keras.layers import Conv2D
 from keras.models import load_model
-from keras.optimizers import Adam
+from tensorflow.keras.optimizers import Adam
 
 from ..base_model import BaseModel
 from utils.data import normalize
